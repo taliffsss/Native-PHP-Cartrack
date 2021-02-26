@@ -1,0 +1,50 @@
+server {
+    listen 80;
+    server_name localhost;
+    root   /var/www;
+
+    access_log /var/log/nginx/back-access.log;
+    error_log /var/log/nginx/back-error.log;
+
+    location / {
+        index  index.php index.html;
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        try_files $uri = 404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        
+        include fastcgi_params;
+
+        #production set
+        fastcgi_param CARTRACK_ENV development;
+
+        fastcgi_param REQUEST_URI $request_uri;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+
+        fastcgi_param DB_NAME cartrack-db;
+        fastcgi_param DB_HOST mysql;
+        fastcgi_param DB_USERNAME docker_local;
+        fastcgi_param DB_PASSWORD secret;
+
+        #JWT Key
+        fastcgi_param JWT_KEY AB4F63F9AC65152575886860DDE480A1;
+    }
+
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+        rewrite "^/(.*)\.[\d]{10}\.(css|js)$" /$1.$2 break;
+    }
+
+    location ~ /*\.(editorconfig|gitignore|htaccess|xml|sql|json|md|yaml|conf|ini|rst) {
+        deny all;
+    }
+
+    location ~ ^/(application|common|system|tests|vendor)/ {
+        deny all;
+    }
+}
