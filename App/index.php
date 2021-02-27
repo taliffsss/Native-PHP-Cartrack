@@ -35,18 +35,19 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Factory\AppFactory;
 use Slim\Psr7\Response;
-use Cartrack\Controller\Users;
+use Cartrack\Controller\Crud;
 use Cartrack\Core\App;
 use Cartrack\Libraries\AuthorizationMiddleware;
+use Cartrack\Libraries\Database;
 
 $app = AppFactory::create();
 
 $app->group('/user', function (RouteCollectorProxy $group) {
 	
-    $group->delete('/remove', '\Cartrack\Controller\Users::remove')->add(new AuthorizationMiddleware);
-    $group->get('/show', '\Cartrack\Controller\Users::show')->add(new AuthorizationMiddleware);
-    $group->post('/store', '\Cartrack\Controller\Users::store');
-    $group->patch('/update/{id}', '\Cartrack\Controller\Users::update')->add(new AuthorizationMiddleware);
+    $group->delete('/remove', '\Cartrack\Controller\Crud::remove')->add(new AuthorizationMiddleware);
+    $group->get('/show', '\Cartrack\Controller\Crud::show')->add(new AuthorizationMiddleware);
+    $group->post('/store', '\Cartrack\Controller\Crud::store');
+    $group->patch('/update/{id}', '\Cartrack\Controller\Crud::update')->add(new AuthorizationMiddleware);
 });
 
 

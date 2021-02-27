@@ -1,0 +1,76 @@
+version: "3.7"
+
+services:
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    networks: 
+      - user-svc
+    container_name: nginx-cartrack
+    restart: on-failure
+    image: nginx-cartrack
+    depends_on:
+     - php
+    ports:
+      - "8081:80"
+    networks: 
+      - cartrack
+    environment:
+      PHP_HOST: php
+      PHP_PORT: 9002
+    volumes:
+      - ./App:/var/www
+
+  php:
+    build:
+      context: .
+      dockerfile: php-fpm/Dockerfile
+    networks: 
+      - cartrack
+    container_name: php-cartrack
+    ports:
+      - "9002:9000"
+    restart: on-failure
+    image: php-cartrack
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 63711
+      POSTGRES_HOST: postgres
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - ./App:/var/www
+
+  postgres:
+    image: postgres:13.2
+    networks: 
+      - cartrack
+    container_name: postgres-cartrack
+    restart: on-failure
+    tty: true
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: cartrack-db
+      POSTGRES_USER: docker_local
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6-alpine
+    networks: 
+      - cartrack
+    container_name: redis-cartrack
+    ports:
+      - 63711:6379
+    restart: "on-failure"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 63711
+
+networks:
+  cartrack:

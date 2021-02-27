@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Firebase\JWT\ExpiredException;
 use Cartrack\Core\Helper;
-use Cartrack\Model\User;
+use Cartrack\Model\Crud;
 use Slim\Psr7\Response;
 use Firebase\JWT\JWT;
 
@@ -31,7 +31,7 @@ class AuthorizationMiddleware
 
         try {
 
-            $user = new User;
+            $user = new Crud();
 
             $auth = $request->getHeader('Authorization');
 
@@ -51,8 +51,8 @@ class AuthorizationMiddleware
 
                     $where = [
                         'id'        => $decode->data->id,
-                        'name'      => $decode->data->name,
-                        'username'  => $decode->data->username, 
+                        'item'      => $decode->data->item,
+                        'i_desc'    => $decode->data->i_desc, 
                     ];
 
                     $result = $user->fetch($where);
@@ -87,13 +87,11 @@ class AuthorizationMiddleware
 
             $current = (string) $response->getBody();
 
-            $json = json_encode($current);
+            $json = json_decode($current);
 
             $json->token = $newToken;
 
             return Helper::jsonResponse($payload->code, $json, new Response());
         }
-
-        
     }
 }

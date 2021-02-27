@@ -27,10 +27,11 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param PATH_INFO $fastcgi_path_info;
 
-        fastcgi_param DB_NAME cartrack-db;
-        fastcgi_param DB_HOST mysql;
-        fastcgi_param DB_USERNAME docker_local;
-        fastcgi_param DB_PASSWORD secret;
+        fastcgi_param DB_NAME_POSTGRES d1b4oe0cmou81i;
+        fastcgi_param DB_HOST_POSTGRES ec2-176-34-237-141.eu-west-1.compute.amazonaws.com;
+        fastcgi_param DB_USERNAME_POSTGRES jljbzxjcxicvvn;
+        fastcgi_param DB_PASSWORD_POSTGRES f608bcd12574fc48e322dcc08ca5dc6829404f3cb598eb36812439392ad2b4d7;
+        fastcgi_param DB_PORT_POSTGRES 5432;
 
         #JWT Key
         fastcgi_param JWT_KEY AB4F63F9AC65152575886860DDE480A1;

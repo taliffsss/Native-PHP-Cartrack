@@ -44,17 +44,16 @@ class Database {
      * Established MySQL connection
      */
     private function connect() {
-        $dsn = 'mysql:host='.$_SERVER['DB_HOST'].';dbname='.$_SERVER['DB_NAME'];
+        $dsn = 'pgsql:host='.$_SERVER['DB_HOST_POSTGRES'].';port='.$_SERVER['DB_PORT_POSTGRES'].';dbname='.$_SERVER['DB_NAME_POSTGRES'].';sslmode=require';
 
         $options = [
             PDO::ATTR_PERSISTENT => true,
-            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ];
 
         try{
 
-            $this->dbh = new PDO($dsn, $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $options);
+            $this->dbh = new PDO($dsn, $_SERVER['DB_USERNAME_POSTGRES'], $_SERVER['DB_PASSWORD_POSTGRES'], $options);
 
             return $this->dbh;
             
@@ -174,7 +173,7 @@ class Database {
 
         $whereClause = rtrim($whereClause,' AND ');
 
-        $query = "UPDATE $table SET $fieldsDetails WHERE {$whereClause} AND deleted_at IS NULL";
+        $query = "UPDATE $table SET $fieldsDetails WHERE {$whereClause}";
 
         $this->query($query);
 

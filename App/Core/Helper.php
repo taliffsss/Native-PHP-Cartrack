@@ -4,7 +4,7 @@ namespace Cartrack\Core;
 
 use Slim\Routing\RouteContext;
 use Cartrack\Model\RefreshToken;
-use Cartrack\Model\User;
+use Cartrack\Model\Crud;
 use Firebase\JWT\JWT;
 
 class Helper
@@ -66,15 +66,13 @@ class Helper
 
         $params = $request->getServerParams();
 
-        $user = new User();
-
-        $refresh = new RefreshToken();
+        $crud = new Crud();
 
         $where = [
             'id' => current($activeUser), 
         ];
 
-        $result = $user->fetch($where);
+        $result = $crud->fetch($where);
 
         if (!empty($result)) {
             $issued = time();
@@ -88,14 +86,20 @@ class Helper
                 'data' => $result,
             ];
 
-            $token = JWT::encode($auth, $params['JWT_KEY']);
-
-            $save = [
-                'uid'   => current($activeUser),
-                'hash'  => $token
+            $where = [
+                'crud_id' => current($activeUser), 
             ];
 
-            $refreshToken = $refresh->fetch(['uid' => current($activeUser)]);
+            $token = JWT::encode($auth, $params['JWT_KEY']);
+
+            $refresh = new RefreshToken();
+
+            $save = [
+                'crud_id'   => current($activeUser),
+                'auth_token'  => $token
+            ];
+
+            $refreshToken = $refresh->fetch($where);
             
             if (empty($refreshToken)) {
                 $refresh->insert($save);

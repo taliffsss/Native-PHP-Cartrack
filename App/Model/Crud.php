@@ -3,15 +3,15 @@ namespace Cartrack\Model;
 
 use Cartrack\Core\Model;
 
-class RefreshToken extends Model {
+class Crud extends Model {
 	
 	function __construct()
 	{
 		parent::__construct();
 		
-		$this->table = 'api_refresh_token';
+		$this->table = 'api_crud';
 
-		$this->primaryKey = 'refresh_token_id';
+		$this->primaryKey = 'id';
 	}
 }
 

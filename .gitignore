@@ -1,2 +1,3 @@
 App/vendor/*
-mysql-data/*
+postgres-data/*
+App/logs/*

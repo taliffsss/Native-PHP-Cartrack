@@ -13,6 +13,8 @@ class Model {
 
 	protected $db;
 
+	protected $primaryKey;
+
 	protected $table;
 
 	protected $deletedAt;
@@ -33,7 +35,7 @@ class Model {
 
 		$id = $this->db->InsertId();
 
-		return $this->fetch(['id' => $id]);
+		return $this->fetch([$this->primaryKey => $id]);
 
 	}
 
