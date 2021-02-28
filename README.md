@@ -4,7 +4,7 @@
 - Docker 3.1.0 (Windows 10)
 - PHP 7.3
 - Redis 6-alpine
-- mysql 5.7.29
+- Postgres
 - nginx alpine
 - Composer
 ## Docker Compose
@@ -25,9 +25,9 @@ First run ``composer update``, next run ``docker-compose up --build`` you may se
 *POST & PATCH*
 
 	{
-	  "name": "Juan Dela Cruzs",
-	  "username": "cartracks",
-	  "password": "pass1s2342"
+	  "item": "Juan Dela Cruzs",
+	  "desc": "cartracks",
+	  "qty": "pass1s2342"
 	}
 *DELETE*
 
@@ -42,14 +42,9 @@ First run ``composer update``, next run ``docker-compose up --build`` you may se
 	  "message": "Data has been created",
 	  "payload": {
 	    "id": "",
-	    "name": "",
-	    "username": "",
-	    "password": "",
-	    "last_activity": null,
-	    "user_status": "",
-	    "created_at": "",
-	    "deleted_at": null,
-	    "updated_at": null
+	    "item": "",
+	    "desc": "",
+	    "qty": "",
 	  },
 	  "token": ""
 	}
