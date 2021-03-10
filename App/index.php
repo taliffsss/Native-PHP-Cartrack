@@ -38,7 +38,6 @@ use Slim\Psr7\Response;
 use Cartrack\Controller\Crud;
 use Cartrack\Core\App;
 use Cartrack\Libraries\AuthorizationMiddleware;
-use Cartrack\Libraries\Database;
 
 $app = AppFactory::create();
 

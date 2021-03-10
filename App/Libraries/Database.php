@@ -69,6 +69,8 @@ class Database {
      */
     public static function getIntance() {
 
+        // this function is came from my own framework i just detached from their make some changes
+        // self::$_config = Config::get('config','database');
         self::$_config = true;
 
         if (self::$_config == TRUE) {
