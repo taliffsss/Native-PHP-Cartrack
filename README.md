@@ -38,7 +38,7 @@ First run ``composer update``, next run ``docker-compose up --build`` you may se
 **Sample Response**
 
 	{
-	  "code": 200,
+	  "code": 201,
 	  "message": "Data has been created",
 	  "payload": {
 	    "id": "",
