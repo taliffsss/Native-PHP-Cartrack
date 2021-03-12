@@ -27,7 +27,7 @@ First run ``composer update``, next run ``docker-compose up --build`` you may se
 	{
 	  "item": "Juan Dela Cruzs",
 	  "desc": "cartracks",
-	  "qty": "pass1s2342"
+	  "qty": "15"
 	}
 *DELETE*
 
